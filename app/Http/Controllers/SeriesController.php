@@ -7,6 +7,7 @@ use App\Models\Serie;
 use App\Services\CriadorSeries;
 use App\Services\RemovedorSeries;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SeriesController extends Controller
 {
@@ -26,6 +27,15 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request, CriadorSeries $criadorSeries)
     {
         $serie = $criadorSeries->criarSeries($request);
+
+        $email = new \App\Mail\NovaSerie(
+            $request->nome,
+            $request->qtd_temp,
+            $request->qtd_ep
+        );
+        $email->subject = "Nova série criada";
+
+        Mail::to($request->user())->send($email);
 
         $request->session()
             ->flash('mensagem', "Série {$serie->nome} [id: {$serie->id}] criada com sucesso! ");

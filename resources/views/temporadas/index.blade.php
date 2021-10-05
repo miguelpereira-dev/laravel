@@ -6,6 +6,7 @@
 @endsection
 
 @section('conteudo')
+    @include('back-button')
     <div class="list-group">
         @foreach ($temporadas as $temporada)
             <a href='/temporadas/{{ $temporada->id }}/episodios'

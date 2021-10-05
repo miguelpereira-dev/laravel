@@ -8,6 +8,7 @@
 @section('conteudo')
 
     @include('mensagem', ['mensagem' => $mensagem])
+    @include('back-button')
     <form action="/temporadas/{{ $temporada->id }}/episodios/assistir" method="post">
         @csrf
         <div class="list-group">
